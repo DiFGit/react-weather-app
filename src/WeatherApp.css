@@ -1,0 +1,81 @@
+.search-engine {
+  border-radius: 4px;
+  width: 175px;
+}
+
+.search-glass {
+  position: relative;
+  top: 1px;
+  border-width: 2px;
+  border-radius: 4px;
+  border-style: outset;
+  border-color: initial;
+  border-image: initial;
+}
+.local-icon {
+  text-align: right;
+  font-size: x-large;
+  color: #ec6e4c;
+}
+
+.current-location {
+  border-radius: 50%;
+  border-color: rgb(250, 250, 250, 0);
+  background: rgb(250, 250, 250, 0);
+}
+
+.active {
+  color: #ffffff;
+}
+
+.active:hover {
+  cursor: default;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.inactive {
+  color: #ec6e4c;
+}
+
+.inactive:hover {
+  color: #ec6e4c;
+}
+
+.units-links {
+  font-size: x-large;
+}
+.btn-lg {
+  font-size: x-large;
+}
+.clearfix {
+  margin-bottom: -35px;
+  margin-top: -15px;
+}
+
+footer {
+  background: rgba(192, 192, 192, 0.7);
+  border-radius: 10px;
+}
+
+small {
+  display: block;
+}
+
+.forecast {
+  margin-top: 90px;
+}
+
+.forecastDescription {
+  position: relative;
+  top: 90px;
+}
+
+.forecastIcon {
+  height: 36px;
+  width: 36px;
+}
+
+.forecastBox {
+  text-align: center;
+}

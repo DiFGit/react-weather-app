@@ -1,0 +1,27 @@
+.leftData:first-letter {
+  text-transform: capitalize;
+}
+
+.weather-icon {
+  position: relative;
+  top: 10px;
+  width: 140px;
+  height: 140px;
+}
+
+.current-weather {
+  text-align: center;
+}
+
+.current-temperature {
+  padding: 0 4px 0;
+  font-size: 40px;
+  position: relative;
+  bottom: 35px;
+}
+ul.weatherDetails {
+  list-style: none;
+  font-size: small;
+  text-align: right;
+  line-height: 25px;
+}
