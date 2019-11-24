@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React /*, { useState } */ from "react";
+/* import axios from "axios"; */
 import "./WeatherApp.css";
 import MainData from "./MainData";
 
-export default function SearchForm() {
-  let [city, setCity] = useState();
+export default function WeatherApp() {
+  /* let [city, setCity] = useState();
   let [temperature, setTemperature] = useState(null);
   let [loaded, setLoaded] = useState(false);
 
@@ -23,19 +23,21 @@ export default function SearchForm() {
     let apiUrl = `https://api.openweathermap.org/data/2.5/`;
     let weatherApiUrl = `${apiUrl}weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(weatherApiUrl).then(displayTemperature);
-  }
+  } */
 
   return (
     <div>
       <div className="row clearfix">
         <div className="form-group">
-          <form className="form-inline searchForm" onSubmit={handleSubmit}>
+          <form
+            className="form-inline searchForm" /* onSubmit={handleSubmit} */
+          >
             <input
               type="search"
               placeholder="Enter city"
               className="col-5 mr-2 search-engine"
               autoComplete="off"
-              onChange={updateInput}
+              /* onChange={updateInput} */
             />
             <input
               type="submit"
@@ -63,9 +65,9 @@ export default function SearchForm() {
       <div className="row">
         {/*         <WeatherData city={city} loaded={loaded} /> */}
         <MainData
-          city={city}
-          loaded={loaded}
-          temperature={Math.round(temperature)}
+          city="Lisbon"
+          /*           loaded={loaded}
+          temperature={Math.round(temperature)} */
         />
       </div>
 
