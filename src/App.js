@@ -29,7 +29,7 @@ export default function App() {
         </small>
         <small className="github-link">
           <a
-            href="https://github.com/DiFGit/the-scientific-weather-app"
+            href="https://github.com/DiFGit/react-weather-app"
             target="_blank"
             rel="noopener noreferrer"
           >
