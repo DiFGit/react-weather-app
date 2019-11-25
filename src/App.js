@@ -13,7 +13,7 @@ export default function App() {
           alt=""
         />
         <div className="card-img-overlay">
-          <WeatherApp />
+          <WeatherApp defaultCity="Lisbon" />
         </div>
       </div>
       <div className="Footer">
