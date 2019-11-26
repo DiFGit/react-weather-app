@@ -16,7 +16,11 @@ export default function MainData(props) {
           </div>
         </div>
         <div className="col-4 float:left current-weather">
-          <img src={props.iconUrl} className="weather-icon" alt="" />
+          <img
+            src={props.weatherData.iconUrl}
+            className="weather-icon"
+            alt=""
+          />
           <div className="current-temperature">
             <strong>
               <span className="current-temperature-element" />

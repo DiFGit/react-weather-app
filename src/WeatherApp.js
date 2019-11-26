@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./WeatherApp.css";
 import MainData from "./MainData";
+import Forecast from "./Forecast";
 
 export default function WeatherApp(props) {
   let [city, setCity] = useState(props.defaultCity);
   let [weatherData, setWeatherData] = useState({ ready: false });
+  let [forecastData, setForecastData] = useState({ ready: false });
   let [fixedTime, setFixedTime] = useState(null);
 
   function updateTime(timestamp) {
@@ -32,9 +34,22 @@ export default function WeatherApp(props) {
     setFixedTime(`${day}, ${hours}:${minutes}`);
   }
 
+  let [forecastDay, setForecastDay] = useState(null);
+
+  function formatForecastDay() {
+    let date = new Date();
+    let day = date.getDay();
+    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    let forecastWeekDay = days[day + 1];
+    if (day == 6) {
+      forecastWeekDay = days[0];
+    }
+    setForecastDay(forecastWeekDay);
+  }
+
   function handleResponse(response) {
     setWeatherData({
-      icon: response.data.weather[0].icon,
+      iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       temperature: Math.round(response.data.main.temp),
       tempMax: Math.round(response.data.main.temp_max),
       tempMin: Math.round(response.data.main.temp_min),
@@ -49,20 +64,35 @@ export default function WeatherApp(props) {
     updateTime(response.data.dt * 1000 + response.data.timezone * 1000);
   }
 
-  let iconUrl = `https://openweathermap.org/img/wn/${weatherData.icon}@2x.png`;
+  function getForecastData(response) {
+    const forecast = response.data.list[0];
+    setForecastData({
+      forecastIconUrl: `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`,
+      temperature: Math.round(forecast.main.temp),
+      tempMax: Math.round(forecast.main.temp_max),
+      tempMin: Math.round(forecast.main.temp_min),
+      ready: true
+    });
+    formatForecastDay(forecast.dt * 1000 + response.data.city.timezone * 1000);
+  }
 
   function getCityData() {
     const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
     const apiUrl = `https://api.openweathermap.org/data/2.5/`;
     let weatherApiUrl = `${apiUrl}weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(weatherApiUrl).then(handleResponse);
+    let apiForecastUrl = `${apiUrl}forecast?q=${city}&appid=${apiKey}&units=metric`;
+    axios.get(apiForecastUrl).then(getForecastData);
   }
 
   function getLocalData(position) {
     let currentPosition = `lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
-    let apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?${currentPosition}&appid=${apiKey}&units=metric`;
+    const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
+    const apiUrl = `https://api.openweathermap.org/data/2.5/`;
+    let weatherApiUrl = `${apiUrl}weather?${currentPosition}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(handleResponse);
+    let apiForecastUrl = `${apiUrl}forecast?q=${currentPosition}&appid=${apiKey}&units=metric`;
+    axios.get(apiForecastUrl).then(getForecastData);
   }
 
   function getCurrentLocation() {
@@ -121,61 +151,12 @@ export default function WeatherApp(props) {
           <MainData
             city={city}
             weatherData={weatherData}
-            iconUrl={iconUrl}
             fixedTime={fixedTime}
           />
         </div>
         <div className="forecast">
           <small className="forecastDescription">Around this time, on</small>
-          <footer className="forecastBox">
-            <div className="row justify-content-center forecast">
-              <div className="col-2">
-                <small>Mon</small>
-                <img
-                  src="https://www.accuweather.com/images/weathericons/3.svg"
-                  className="forecastIcon"
-                  alt=""
-                />
-                <small>28º</small>
-              </div>
-              <div className="col-2">
-                <small>Tue</small>
-                <img
-                  src="https://www.accuweather.com/images/weathericons/3.svg"
-                  className="forecastIcon"
-                  alt=""
-                />
-                <small>28º</small>
-              </div>
-              <div className="col-2">
-                <small>Wed</small>
-                <img
-                  src="https://www.accuweather.com/images/weathericons/3.svg"
-                  className="forecastIcon"
-                  alt=""
-                />
-                <small>24º</small>
-              </div>
-              <div className="col-2">
-                <small>Thu</small>
-                <img
-                  src="https://www.accuweather.com/images/weathericons/3.svg"
-                  className="forecastIcon"
-                  alt=""
-                />
-                <small>26º</small>
-              </div>
-              <div className="col-2">
-                <small>Fri</small>
-                <img
-                  src="https://www.accuweather.com/images/weathericons/3.svg"
-                  className="forecastIcon"
-                  alt=""
-                />
-                <small>28º</small>
-              </div>
-            </div>
-          </footer>
+          <Forecast forecastData={forecastData} forecastDay={forecastDay} />
         </div>
       </div>
     );
