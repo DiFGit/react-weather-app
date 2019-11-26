@@ -58,6 +58,17 @@ export default function WeatherApp(props) {
     axios.get(weatherApiUrl).then(handleResponse);
   }
 
+  function getLocalData(position) {
+    let currentPosition = `lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
+    let apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?${currentPosition}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(handleResponse);
+  }
+
+  function getCurrentLocation() {
+    navigator.geolocation.getCurrentPosition(getLocalData);
+  }
+
   function updateInput(event) {
     setCity(event.target.value);
   }
@@ -87,16 +98,19 @@ export default function WeatherApp(props) {
               />
 
               <div className="icon local-icon">
-                <button className="col-2 btn btn-sm mr-5 current-location">
+                <button
+                  className="col-2 btn btn-sm ml-2 mr-5 current-location"
+                  onClick={getCurrentLocation}
+                >
                   <i className="fas fa-map-marker-alt local-icon " />
                 </button>
               </div>
               <div className="units-links">
-                <a href="/" className="active btn btn-lg celsius">
+                <a href="/" className="active btn btn-lg units celsius">
                   C{" "}
                 </a>
                 |
-                <a href="/" className="inactive btn btn-lg fahrenheit">
+                <a href="/" className="inactive btn btn-lg units fahrenheit">
                   F{" "}
                 </a>
               </div>

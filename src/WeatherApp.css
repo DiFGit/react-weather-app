@@ -1,3 +1,7 @@
+.searchForm {
+  margin-bottom: 12px;
+}
+
 .search-engine {
   border-radius: 4px;
   width: 175px;
@@ -13,15 +17,20 @@
   border-image: initial;
 }
 .local-icon {
-  text-align: right;
+  text-align: center;
   font-size: x-large;
   color: #ec6e4c;
 }
 
 .current-location {
-  border-radius: 50%;
+  border-radius: 10%;
   border-color: rgb(250, 250, 250, 0);
   background: rgb(250, 250, 250, 0);
+  padding: 0 18px 0 0px;
+}
+
+.units {
+  padding: 5px 12px;
 }
 
 .active {
