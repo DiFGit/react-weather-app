@@ -29,34 +29,6 @@
   padding: 0 18px 0 0px;
 }
 
-.units {
-  padding: 5px 12px;
-}
-
-.active {
-  color: #ffffff;
-}
-
-.active:hover {
-  cursor: default;
-  text-decoration: none;
-  color: #ffffff;
-}
-
-.inactive {
-  color: #ec6e4c;
-}
-
-.inactive:hover {
-  color: #ec6e4c;
-}
-
-.units-links {
-  font-size: x-large;
-}
-.btn-lg {
-  font-size: x-large;
-}
 .clearfix {
   margin-bottom: -35px;
   margin-top: -15px;

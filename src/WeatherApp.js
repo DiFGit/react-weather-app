@@ -3,6 +3,7 @@ import axios from "axios";
 import "./WeatherApp.css";
 import MainData from "./MainData";
 import Forecast from "./Forecast";
+import WeatherUnits from "./WeatherUnits";
 
 export default function WeatherApp(props) {
   let [city, setCity] = useState(props.defaultCity);
@@ -41,7 +42,7 @@ export default function WeatherApp(props) {
     let day = date.getDay();
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let forecastWeekDay = days[day + 1];
-    if (day == 6) {
+    if (day === 6) {
       forecastWeekDay = days[0];
     }
     setForecastDay(forecastWeekDay);
@@ -90,7 +91,7 @@ export default function WeatherApp(props) {
     const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
     const apiUrl = `https://api.openweathermap.org/data/2.5/`;
     let weatherApiUrl = `${apiUrl}weather?${currentPosition}&appid=${apiKey}&units=metric`;
-    axios.get(apiUrl).then(handleResponse);
+    axios.get(weatherApiUrl).then(handleResponse);
     let apiForecastUrl = `${apiUrl}forecast?q=${currentPosition}&appid=${apiKey}&units=metric`;
     axios.get(apiForecastUrl).then(getForecastData);
   }
@@ -135,15 +136,7 @@ export default function WeatherApp(props) {
                   <i className="fas fa-map-marker-alt local-icon " />
                 </button>
               </div>
-              <div className="units-links">
-                <a href="/" className="active btn btn-lg units celsius">
-                  C{" "}
-                </a>
-                |
-                <a href="/" className="inactive btn btn-lg units fahrenheit">
-                  F{" "}
-                </a>
-              </div>
+              <WeatherUnits temperature={weatherData.temperature} />
             </form>
           </div>
         </div>
