@@ -3,13 +3,13 @@ import axios from "axios";
 import "./WeatherApp.css";
 import MainData from "./MainData";
 import Forecast from "./Forecast";
-import WeatherUnits from "./WeatherUnits";
 
 export default function WeatherApp(props) {
   let [city, setCity] = useState(props.defaultCity);
   let [weatherData, setWeatherData] = useState({ ready: false });
   let [forecastData, setForecastData] = useState({ ready: false });
   let [fixedTime, setFixedTime] = useState(null);
+  let [units, setUnits] = useState("metric");
 
   function updateTime(timestamp) {
     let date = new Date(timestamp);
@@ -109,6 +109,24 @@ export default function WeatherApp(props) {
     getCityData();
   }
 
+  let [celsius, setCelsius] = useState("active btn btn - lg units celsius");
+  let [fahrenheit, setFahrenheit] = useState(
+    "inactive btn btn-lg units fahrenheit"
+  );
+  function displayImperial(event) {
+    event.preventDefault();
+    setUnits("imperial");
+    setFahrenheit("active btn btn - lg units celsius");
+    setCelsius("inactive btn btn-lg units fahrenheit");
+  }
+
+  function displayMetrics(event) {
+    event.preventDefault();
+    setUnits("metric");
+    setFahrenheit("inactive btn btn - lg units celsius");
+    setCelsius("active btn btn-lg units fahrenheit");
+  }
+
   if (weatherData.ready) {
     return (
       <div>
@@ -136,7 +154,15 @@ export default function WeatherApp(props) {
                   <i className="fas fa-map-marker-alt local-icon " />
                 </button>
               </div>
-              <WeatherUnits temperature={weatherData.temperature} />
+              <div className="units-links">
+                <a href="/" onClick={displayMetrics} className={celsius}>
+                  C{" "}
+                </a>
+                |
+                <a href="/" onClick={displayImperial} className={fahrenheit}>
+                  F{" "}
+                </a>
+              </div>
             </form>
           </div>
         </div>
@@ -145,6 +171,7 @@ export default function WeatherApp(props) {
             city={city}
             weatherData={weatherData}
             fixedTime={fixedTime}
+            units={units}
           />
         </div>
         <div className="forecast">
