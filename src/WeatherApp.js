@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "./WeatherApp.css";
 import CityImage from "./CityImage";
 import MainData from "./MainData";
 import Forecast from "./Forecast";
+import Loader from "react-loader-spinner";
 
 export default function WeatherApp(props) {
   let [city, setCity] = useState(props.defaultCity);
@@ -219,6 +221,15 @@ export default function WeatherApp(props) {
   } else {
     getCityData();
     getCityImage();
-    return "Loading...";
+    return (
+      <Loader
+        type="TailSpin"
+        color="#00BFFF"
+        height={80}
+        width={80}
+        timeout={3000} //3 secs
+        className="loader"
+      />
+    );
   }
 }

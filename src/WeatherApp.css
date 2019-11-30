@@ -3,6 +3,10 @@ div.container {
   max-height: 500px;
 }
 
+.loader {
+  text-align: center;
+}
+
 .searchForm {
   margin-bottom: 12px;
 }
