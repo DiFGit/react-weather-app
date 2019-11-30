@@ -2,30 +2,29 @@ import React from "react";
 import "./MainData.css";
 
 export default function MainData(props) {
+  let data = props.weatherData;
+
   if (props.units === "imperial") {
-    let temperature = Math.round((props.weatherData.temperature * 9) / 5 + 32);
-    let tempMax = Math.round((props.weatherData.tempMax * 9) / 5 + 32);
-    let tempMin = Math.round((props.weatherData.tempMin * 9) / 5 + 32);
+    let temperature = Math.round((data.temperature * 9) / 5 + 32);
+    let tempMax = Math.round((data.tempMax * 9) / 5 + 32);
+    let tempMin = Math.round((data.tempMin * 9) / 5 + 32);
+    let windSpeed = Math.round(data.windSpeed * 2.236936).toFixed(1);
 
     return (
       <div className="row form-group clearfix">
         <div className="form-inline weatherMain">
           <div className="col-4 leftData">
-            <h4 className="leftData location">{props.weatherData.city}</h4>
+            <h4 className="leftData location">{data.city}</h4>
             <div className="leftData day-hour">{props.fixedTime}</div>
             <div className="leftData weather-description">
-              {props.weatherData.description}
+              {data.description}
             </div>
             <div className="leftData temp-max-min">
               {tempMax}º/{tempMin}º
             </div>
           </div>
           <div className="col-4 float:left current-weather">
-            <img
-              src={props.weatherData.iconUrl}
-              className="weather-icon"
-              alt=""
-            />
+            <img src={data.iconUrl} className="weather-icon" alt="" />
             <div className="current-temperature">
               <strong>
                 <span className="current-temperature-element" />
@@ -38,17 +37,16 @@ export default function MainData(props) {
             <br />
             <li>
               Pressure: <span className="pressure" />
-              {props.weatherData.pressure}mb
+              {data.pressure}mb
             </li>
             <li>
               Humidity: <span className="humidity" />
-              {props.weatherData.humidity}%
+              {data.humidity}%
             </li>
             <li>
-              Wind: <span className="wind-speed" />{" "}
-              {props.weatherData.windSpeed}
+              Wind: <span className="wind-speed" /> {windSpeed}
               <span className="wind-units" />
-              m/s
+              mph
             </li>
           </ul>
         </div>
@@ -59,25 +57,21 @@ export default function MainData(props) {
       <div className="row form-group clearfix">
         <div className="form-inline weatherMain">
           <div className="col-4 leftData">
-            <h4 className="leftData location">{props.weatherData.city}</h4>
+            <h4 className="leftData location">{data.city}</h4>
             <div className="leftData day-hour">{props.fixedTime}</div>
             <div className="leftData weather-description">
-              {props.weatherData.description}
+              {data.description}
             </div>
             <div className="leftData temp-max-min">
-              {props.weatherData.tempMax}º/{props.weatherData.tempMin}º
+              {data.tempMax}º/{data.tempMin}º
             </div>
           </div>
           <div className="col-4 float:left current-weather">
-            <img
-              src={props.weatherData.iconUrl}
-              className="weather-icon"
-              alt=""
-            />
+            <img src={data.iconUrl} className="weather-icon" alt="" />
             <div className="current-temperature">
               <strong>
                 <span className="current-temperature-element" />
-                {props.weatherData.temperature}º
+                {data.temperature}º
               </strong>
             </div>
           </div>
@@ -86,15 +80,14 @@ export default function MainData(props) {
             <br />
             <li>
               Pressure: <span className="pressure" />
-              {props.weatherData.pressure}mb
+              {data.pressure}mb
             </li>
             <li>
               Humidity: <span className="humidity" />
-              {props.weatherData.humidity}%
+              {data.humidity}%
             </li>
             <li>
-              Wind: <span className="wind-speed" />{" "}
-              {props.weatherData.windSpeed}
+              Wind: <span className="wind-speed" /> {data.windSpeed}
               <span className="wind-units" />
               m/s
             </li>
