@@ -21,7 +21,16 @@ export default function WeatherApp(props) {
 
   function displayCityImage(response) {
     setImageUrl(response.data.photos[3].src.portrait);
-    console.log(response);
+  }
+
+  function handleMainError() {
+    alert("We are trying to find it...");
+  }
+
+  function handleErrors() {
+    setImageUrl(
+      "https://images.pexels.com/photos/1078850/pexels-photo-1078850.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    );
   }
 
   function getCityImage() {
@@ -32,7 +41,9 @@ export default function WeatherApp(props) {
         Authorization:
           "563492ad6f91700001000001ea246cab4f4645409f66c0be39fbe2b1"
       }
-    }).then(displayCityImage);
+    })
+      .then(displayCityImage)
+      .catch(handleErrors);
   }
 
   function updateTime(timestamp) {
@@ -105,9 +116,15 @@ export default function WeatherApp(props) {
     const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
     const apiUrl = `https://api.openweathermap.org/data/2.5/`;
     let weatherApiUrl = `${apiUrl}weather?q=${city}&appid=${apiKey}&units=metric`;
-    axios.get(weatherApiUrl).then(handleResponse);
+    axios
+      .get(weatherApiUrl)
+      .then(handleResponse)
+      .catch(handleMainError);
     let apiForecastUrl = `${apiUrl}forecast?q=${city}&appid=${apiKey}&units=metric`;
-    axios.get(apiForecastUrl).then(getForecastData);
+    axios
+      .get(apiForecastUrl)
+      .then(getForecastData)
+      .catch(handleErrors);
   }
 
   function getLocalData(position) {
@@ -115,9 +132,15 @@ export default function WeatherApp(props) {
     const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
     const apiUrl = `https://api.openweathermap.org/data/2.5/`;
     let weatherApiUrl = `${apiUrl}weather?${currentPosition}&appid=${apiKey}&units=metric`;
-    axios.get(weatherApiUrl).then(handleResponse);
+    axios
+      .get(weatherApiUrl)
+      .then(handleResponse)
+      .catch(handleMainError);
     let apiForecastUrl = `${apiUrl}forecast?q=${currentPosition}&appid=${apiKey}&units=metric`;
-    axios.get(apiForecastUrl).then(getForecastData);
+    axios
+      .get(apiForecastUrl)
+      .then(getForecastData)
+      .catch(handleErrors);
   }
 
   function getCurrentLocation() {
@@ -152,7 +175,7 @@ export default function WeatherApp(props) {
     return (
       <div className="weatherData container">
         <div className="card bg-dark text-white">
-          <CityImage city={city} image={imageUrl} />{" "}
+          <CityImage image={imageUrl} />{" "}
           <div className="card-img-overlay">
             <div className="row clearfix">
               <div className="form-group">
