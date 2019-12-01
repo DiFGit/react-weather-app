@@ -1,6 +1,6 @@
 div.container {
   max-width: 450px;
-  max-height: 500px;
+  max-height: 800px;
 }
 
 .loader {
@@ -9,6 +9,7 @@ div.container {
 
 .searchForm {
   margin-bottom: 12px;
+  padding: 0 0 0 10px;
 }
 
 .search-engine {
@@ -43,34 +44,22 @@ div.container {
   margin-top: -15px;
 }
 
-footer {
-  background: rgba(192, 192, 192, 0.7);
-  border-radius: 10px;
-}
-
 small {
   display: block;
 }
 
-.forecast {
-  margin-top: 90px;
-}
-
-.forecastDescription {
-  position: relative;
-  top: 90px;
-}
-
-.forecastIcon {
-  height: 36px;
-  width: 36px;
-}
-
-.forecastBox {
-  text-align: center;
-}
 .units {
   padding: 5px 12px;
+  font-size: x-large;
+}
+
+.units-links {
+  font-size: x-large;
+  position: relative;
+  left: 3px;
+}
+
+.btn-lg {
   font-size: x-large;
 }
 
@@ -90,12 +79,4 @@ small {
 
 .inactive:hover {
   color: #ec6e4c;
-}
-
-.units-links {
-  font-size: x-large;
-}
-
-.btn-lg {
-  font-size: x-large;
 }

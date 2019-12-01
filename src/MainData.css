@@ -1,3 +1,10 @@
+.weatherMain {
+  padding: 0 10px;
+}
+
+.leftData {
+  padding: 0 0 0 7px;
+}
 .leftData:first-letter {
   text-transform: capitalize;
 }
@@ -13,6 +20,10 @@
   text-align: center;
 }
 
+.weather-icon {
+  position: relative;
+  right: 10px;
+}
 .current-temperature {
   padding: 0 4px 0;
   font-size: 40px;
@@ -24,4 +35,5 @@ ul.weatherDetails {
   font-size: small;
   text-align: right;
   line-height: 25px;
+  padding: 0 17px 0 0;
 }

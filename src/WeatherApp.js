@@ -21,6 +21,7 @@ export default function WeatherApp(props) {
 
   function displayCityImage(response) {
     setImageUrl(response.data.photos[3].src.portrait);
+    console.log(response);
   }
 
   function getCityImage() {
@@ -204,6 +205,12 @@ export default function WeatherApp(props) {
                 units={units}
               />
             </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <div className="forecast">
               <small className="forecastDescription">
                 Around this time, on

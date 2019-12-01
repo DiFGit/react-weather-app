@@ -27,8 +27,9 @@ export default function MainData(props) {
             <img src={data.iconUrl} className="weather-icon" alt="" />
             <div className="current-temperature">
               <strong>
-                <span className="current-temperature-element" />
-                {temperature}º
+                <span className="current-temperature-element">
+                  {temperature}º
+                </span>
               </strong>
             </div>
           </div>

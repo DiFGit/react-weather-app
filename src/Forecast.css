@@ -1,0 +1,10 @@
+.forecastIcon {
+  height: 36px;
+  width: 36px;
+}
+
+.forecastBox {
+  text-align: center;
+  background: rgba(192, 192, 192, 0.7);
+  border-radius: 10px;
+}
