@@ -9,7 +9,6 @@ export default function Forecast(props) {
     return (
       <footer className="forecastBox">
         <div className="row justify-content-center forecast">
-          <div className="col-auto">mon </div>
           <div className="col-auto">
             <small>{props.forecastDay}</small>
             <img src={data.forecastIconUrl} className="forecastIcon" alt="" />
