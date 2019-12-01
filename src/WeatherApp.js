@@ -10,7 +10,7 @@ import Loader from "react-loader-spinner";
 export default function WeatherApp(props) {
   let [city, setCity] = useState(props.defaultCity);
   let [weatherData, setWeatherData] = useState({ ready: false });
-  let [forecastData, setForecastData] = useState({ ready: false });
+  /* let [forecastData, setForecastData] = useState({ ready: false }); */
   let [fixedTime, setFixedTime] = useState(null);
   let [units, setUnits] = useState("metric");
   let [celsius, setCelsius] = useState("active btn btn - lg units celsius");
@@ -70,20 +70,8 @@ export default function WeatherApp(props) {
     setFixedTime(`${day}, ${hours}:${minutes}`);
   }
 
-  let [forecastDay, setForecastDay] = useState(null);
-
-  function formatForecastDay() {
-    let date = new Date();
-    let day = date.getDay();
-    let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    let forecastWeekDay = days[day + 1];
-    if (day === 6) {
-      forecastWeekDay = days[0];
-    }
-    setForecastDay(forecastWeekDay);
-  }
-
   function handleResponse(response) {
+    console.log(response);
     setWeatherData({
       iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       temperature: Math.round(response.data.main.temp),
@@ -100,18 +88,6 @@ export default function WeatherApp(props) {
     updateTime(response.data.dt * 1000 + response.data.timezone * 1000);
   }
 
-  function getForecastData(response) {
-    const forecast = response.data.list[0];
-    setForecastData({
-      forecastIconUrl: `https://openweathermap.org/img/wn/${forecast.weather[0].icon}@2x.png`,
-      temperature: Math.round(forecast.main.temp),
-      tempMax: Math.round(forecast.main.temp_max),
-      tempMin: Math.round(forecast.main.temp_min),
-      ready: true
-    });
-    formatForecastDay(forecast.dt * 1000 + response.data.city.timezone * 1000);
-  }
-
   function getCityData() {
     const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
     const apiUrl = `https://api.openweathermap.org/data/2.5/`;
@@ -120,11 +96,11 @@ export default function WeatherApp(props) {
       .get(weatherApiUrl)
       .then(handleResponse)
       .catch(handleMainError);
-    let apiForecastUrl = `${apiUrl}forecast?q=${city}&appid=${apiKey}&units=metric`;
+    /*     let apiForecastUrl = `${apiUrl}forecast?q=${city}&appid=${apiKey}&units=metric`;
     axios
       .get(apiForecastUrl)
       .then(getForecastData)
-      .catch(handleErrors);
+      .catch(handleErrors) */
   }
 
   function getLocalData(position) {
@@ -136,11 +112,11 @@ export default function WeatherApp(props) {
       .get(weatherApiUrl)
       .then(handleResponse)
       .catch(handleMainError);
-    let apiForecastUrl = `${apiUrl}forecast?q=${currentPosition}&appid=${apiKey}&units=metric`;
+    /*     let apiForecastUrl = `${apiUrl}forecast?q=${currentPosition}&appid=${apiKey}&units=metric`;
     axios
       .get(apiForecastUrl)
       .then(getForecastData)
-      .catch(handleErrors);
+      .catch(handleErrors); */
   }
 
   function getCurrentLocation() {
@@ -238,11 +214,7 @@ export default function WeatherApp(props) {
               <small className="forecastDescription">
                 Around this time, on
               </small>
-              <Forecast
-                forecastData={forecastData}
-                forecastDay={forecastDay}
-                units={units}
-              />
+              <Forecast city={weatherData.city} units={units} />
             </div>
           </div>
         </div>
