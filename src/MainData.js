@@ -1,5 +1,6 @@
 import React from "react";
 import "./MainData.css";
+import DisplayTime from "./DisplayTime";
 
 export default function MainData(props) {
   let data = props.weatherData;
@@ -15,7 +16,9 @@ export default function MainData(props) {
         <div className="form-inline weatherMain">
           <div className="col-4 leftData">
             <h4 className="leftData location">{data.city}</h4>
-            <div className="leftData day-hour">{props.fixedTime}</div>
+            <div className="leftData day-hour">
+              <DisplayTime time={data.time} />
+            </div>
             <div className="leftData weather-description">
               {data.description}
             </div>
@@ -59,7 +62,9 @@ export default function MainData(props) {
         <div className="form-inline weatherMain">
           <div className="col-4 leftData">
             <h4 className="leftData location">{data.city}</h4>
-            <div className="leftData day-hour">{props.fixedTime}</div>
+            <div className="leftData day-hour">
+              <DisplayTime time={data.time} />
+            </div>
             <div className="leftData weather-description">
               {data.description}
             </div>

@@ -10,7 +10,6 @@ import Loader from "react-loader-spinner";
 export default function WeatherApp(props) {
   let [city, setCity] = useState(props.defaultCity);
   let [weatherData, setWeatherData] = useState({ ready: false });
-  let [fixedTime, setFixedTime] = useState(null);
   let [units, setUnits] = useState("metric");
   let [celsius, setCelsius] = useState("active btn btn - lg units celsius");
   let [fahrenheit, setFahrenheit] = useState(
@@ -45,30 +44,6 @@ export default function WeatherApp(props) {
       .catch(handleErrors);
   }
 
-  function updateTime(timestamp) {
-    let date = new Date(timestamp);
-    let days = [
-      "sunday",
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday"
-    ];
-    let day = days[date.getDay()];
-    let hours = date.getHours();
-    if (hours < 10) {
-      hours = `0${hours}`;
-    }
-    let minutes = date.getMinutes();
-    if (minutes < 10) {
-      minutes = `0${minutes}`;
-    }
-
-    setFixedTime(`${day}, ${hours}:${minutes}`);
-  }
-
   function handleResponse(response) {
     setWeatherData({
       iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
@@ -80,10 +55,10 @@ export default function WeatherApp(props) {
       description: response.data.weather[0].description,
       windSpeed: response.data.wind.speed,
       city: response.data.name,
+      time: response.data.dt * 1000 + response.data.timezone * 1000,
       ready: true
     });
     setCity(response.data.name);
-    updateTime(response.data.dt * 1000 + response.data.timezone * 1000);
   }
 
   function getCityData() {
@@ -185,12 +160,7 @@ export default function WeatherApp(props) {
               </div>
             </div>
             <div className="row">
-              <MainData
-                city={city}
-                weatherData={weatherData}
-                fixedTime={fixedTime}
-                units={units}
-              />
+              <MainData city={city} weatherData={weatherData} units={units} />
             </div>
             <br />
             <br />
