@@ -20,12 +20,12 @@ export default function Forecast(props) {
   }
 
   function getForecastData(response) {
-    setForecast(response.data.list);
+    setForecast(response.data);
     setTimezone(response.data.city.timezone);
     setLoaded(true);
   }
 
-  if ((loaded, forecast)) {
+  if (loaded && forecast.city.name === props.city) {
     let forecast24h = [7, 15, 23, 31, 39];
     return (
       <footer className="forecastBox">
@@ -34,20 +34,20 @@ export default function Forecast(props) {
             return (
               <div className="col-auto">
                 {
-                  <span key={index}>
+                  <span>
                     <small key={index.dt}>
                       {formatForecastDay(
-                        forecast[index].dt * 1000 - timezone * 1000
+                        forecast.list[index].dt * 1000 - timezone * 1000
                       )}
                     </small>
                     <img
                       key={index.icon}
-                      src={`http://openweathermap.org/img/wn/${forecast[index].weather[0].icon}@2x.png`}
+                      src={`http://openweathermap.org/img/wn/${forecast.list[index].weather[0].icon}@2x.png`}
                       className="forecastIcon"
                       alt=""
                     />
-                    <small key={index.temperature}>
-                      {Math.round(forecast[index].main.temp)}º
+                    <small key={index.temp}>
+                      {Math.round(forecast.list[index].main.temp)}º
                     </small>
                   </span>
                 }
