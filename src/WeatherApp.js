@@ -10,7 +10,6 @@ import Loader from "react-loader-spinner";
 export default function WeatherApp(props) {
   let [city, setCity] = useState(props.defaultCity);
   let [weatherData, setWeatherData] = useState({ ready: false });
-  /* let [forecastData, setForecastData] = useState({ ready: false }); */
   let [fixedTime, setFixedTime] = useState(null);
   let [units, setUnits] = useState("metric");
   let [celsius, setCelsius] = useState("active btn btn - lg units celsius");
@@ -71,7 +70,6 @@ export default function WeatherApp(props) {
   }
 
   function handleResponse(response) {
-    console.log(response);
     setWeatherData({
       iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
       temperature: Math.round(response.data.main.temp),
@@ -96,11 +94,6 @@ export default function WeatherApp(props) {
       .get(weatherApiUrl)
       .then(handleResponse)
       .catch(handleMainError);
-    /*     let apiForecastUrl = `${apiUrl}forecast?q=${city}&appid=${apiKey}&units=metric`;
-    axios
-      .get(apiForecastUrl)
-      .then(getForecastData)
-      .catch(handleErrors) */
   }
 
   function getLocalData(position) {
@@ -112,11 +105,6 @@ export default function WeatherApp(props) {
       .get(weatherApiUrl)
       .then(handleResponse)
       .catch(handleMainError);
-    /*     let apiForecastUrl = `${apiUrl}forecast?q=${currentPosition}&appid=${apiKey}&units=metric`;
-    axios
-      .get(apiForecastUrl)
-      .then(getForecastData)
-      .catch(handleErrors); */
   }
 
   function getCurrentLocation() {
