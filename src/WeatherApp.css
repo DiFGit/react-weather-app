@@ -3,6 +3,7 @@ div.container {
   max-height: 800px;
   text-shadow: 1px 1px 1px black;
   padding: 15px 0 0 0;
+  margin-bottom: 10px;
 }
 
 .loader {
