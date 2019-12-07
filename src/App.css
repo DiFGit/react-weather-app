@@ -1,21 +1,9 @@
 .App {
   font-family: sans-serif;
-  text-shadow: 1px 1px 1px black;
 }
 
-.github-link {
+.links {
   text-align: center;
-  position: relative;
-  right: 125px;
-  bottom: 18.5px;
-  text-shadow: none;
-}
-
-.pexels-link {
-  text-align: center;
-  position: relative;
-  left: 135px;
-  text-shadow: none;
 }
 
 .pexels-link a {

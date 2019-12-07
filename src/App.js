@@ -7,9 +7,19 @@ export default function App() {
     <div className="App">
       <WeatherApp defaultCity="Lisbon" />
 
-      <div className="Footer">
+      <div className="Footer links">
+        <small className="github-link">
+          <a
+            href="https://github.com/DiFGit/react-weather-app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open-source code{" "}
+          </a>
+          by Diana Ferreira
+        </small>
         <small className="pexels-link">
-          Photos provided by
+          Photos provided by{" "}
           <a
             href="https://www.pexels.com/"
             target="_blank"
@@ -17,16 +27,6 @@ export default function App() {
           >
             Pexels
           </a>
-        </small>
-        <small className="github-link">
-          <a
-            href="https://github.com/DiFGit/react-weather-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open-source code
-          </a>
-          , by DiFGit
         </small>
       </div>
     </div>

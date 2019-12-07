@@ -1,6 +1,7 @@
 div.container {
   max-width: 450px;
   max-height: 800px;
+  text-shadow: 1px 1px 1px black;
 }
 
 .loader {
