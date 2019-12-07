@@ -167,7 +167,6 @@ export default function WeatherApp(props) {
             <br />
             <br />
             <br />
-            <br />
             <div className="forecast">
               <small className="forecastDescription">
                 Around this time, on
