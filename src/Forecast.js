@@ -12,10 +12,7 @@ export default function Forecast(props) {
     let date = new Date(timestamp);
     let day = date.getDay();
     let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    let forecastWeekDay = days[day + 1];
-    if (day === 6) {
-      forecastWeekDay = days[0];
-    }
+    let forecastWeekDay = days[day];
     return `${forecastWeekDay}`;
   }
 
