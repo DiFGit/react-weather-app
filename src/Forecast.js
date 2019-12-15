@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import ForecastTemperatures from "./ForecastTemperatures";
 import CityImage from "./CityImage";
 import "./Forecast.css";
 
@@ -83,8 +84,8 @@ export default function Forecast(props) {
                       className="forecastIcon"
                       alt=""
                     />
-                    <small key={index.temp}>
-                      {Math.round(forecast.list[index].main.temp)}º
+                    <small>
+                      <ForecastTemperatures data={forecast} />
                     </small>
                   </span>
                 }
