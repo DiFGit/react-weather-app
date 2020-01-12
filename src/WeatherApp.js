@@ -167,11 +167,14 @@ export default function WeatherApp(props) {
             <br />
             <br />
             <br />
+            <br />
             <div className="forecast">
-              <small className="forecastDescription">
-                Around this time, on
-              </small>
-              <Forecast city={weatherData.city} units={units} />
+              <Forecast
+                defaultCity={props.defaultCity}
+                city={weatherData.city}
+                units={units}
+                ready={weatherData.ready}
+              />
             </div>
           </div>
         </div>
