@@ -1,4 +1,5 @@
 import React from "react";
+import "./Forecast.css";
 
 export default function ForecastDisplay(props) {
   let forecastDays = props.fourDayForecast;

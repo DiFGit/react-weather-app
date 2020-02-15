@@ -2,11 +2,11 @@ import React from "react";
 import ForecastDisplay from "./ForecastDisplay";
 
 export default function ForecastDays(props) {
-  let forecast = props.data;
+  let forecast = props.data.data;
+  console.log(forecast);
 
-  let date = new Date(
-    props.data.list[0].dt * 1000 - props.data.city.timezone * 1000
-  );
+  let date = new Date(props.data.date * 1000 - props.data.timezone * 1000);
+
   let hour = date.getHours();
 
   if (hour === 21) {

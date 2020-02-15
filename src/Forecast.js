@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/* import React, { useState } from "react";
 import axios from "axios";
 import ForecastDays from "./ForecastDays";
 import CityImage from "./CityImage";
@@ -7,20 +7,15 @@ import "./Forecast.css";
 export default function Forecast(props) {
   let [loaded, setLoaded] = useState(false);
   let [forecast, setForecast] = useState(null);
-  let [city, setCity] = useState(props.city);
   let units = props.units;
   console.log(props.city);
   console.log(loaded);
 
   function getForecastData(response) {
     setForecast(response.data);
-    console.log(forecast);
-    setLoaded(true);
-    setCity(response.data.city.name);
-    console.log(city);
   }
 
-  if (loaded && forecast.city.name === props.city) {
+  if (props.ready && loaded && forecast.city.name === props.city) {
     return <ForecastDays data={forecast} units={units} loaded={true} />;
   } else {
     const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
@@ -39,3 +34,4 @@ export default function Forecast(props) {
     return <div>"Loading..."</div>;
   }
 }
+ */

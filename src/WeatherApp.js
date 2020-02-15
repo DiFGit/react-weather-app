@@ -4,7 +4,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "./WeatherApp.css";
 import CityImage from "./CityImage";
 import MainData from "./MainData";
-import Forecast from "./Forecast";
+import ForecastDays from "./ForecastDays";
 import Loader from "react-loader-spinner";
 
 export default function WeatherApp(props) {
@@ -16,6 +16,10 @@ export default function WeatherApp(props) {
     "inactive btn btn-lg units fahrenheit"
   );
   let [imageUrl, setImageUrl] = useState(null);
+  let [forecastData, setForecastData] = useState({ ready: false });
+  console.log(city);
+  console.log(weatherData.ready);
+  console.log(forecastData.ready);
 
   function displayCityImage(response) {
     setImageUrl(response.data.photos[3].src.portrait);
@@ -44,6 +48,17 @@ export default function WeatherApp(props) {
       .catch(handleErrors);
   }
 
+  function handleForecastResponse(response) {
+    setForecastData({
+      data: response.data,
+      city: response.data.city.name,
+      date: response.data.list[0].dt,
+      timezone: response.data.city.timezone,
+      ready: true
+    });
+    console.log(response.data.city.name);
+  }
+
   function handleResponse(response) {
     setWeatherData({
       iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
@@ -59,6 +74,16 @@ export default function WeatherApp(props) {
       ready: true
     });
     setCity(response.data.name);
+  }
+
+  function getForecastData() {
+    const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
+    const apiUrl = `https://api.openweathermap.org/data/2.5/`;
+    let apiForecastUrl = `${apiUrl}forecast?q=${city}&appid=${apiKey}&units=metric`;
+    axios
+      .get(apiForecastUrl)
+      .then(handleForecastResponse)
+      .catch(handleErrors);
   }
 
   function getCityData() {
@@ -110,7 +135,7 @@ export default function WeatherApp(props) {
     setCelsius("active btn btn-lg units fahrenheit");
   }
 
-  if (weatherData.ready) {
+  if (weatherData.ready && forecastData.ready) {
     return (
       <div className="weatherData container">
         <div className="card bg-dark text-white">
@@ -169,12 +194,7 @@ export default function WeatherApp(props) {
             <br />
             <br />
             <div className="forecast">
-              <Forecast
-                defaultCity={props.defaultCity}
-                city={weatherData.city}
-                units={units}
-                ready={weatherData.ready}
-              />
+              <ForecastDays data={forecastData} units={units} loaded={true} />
             </div>
           </div>
         </div>
@@ -183,6 +203,7 @@ export default function WeatherApp(props) {
   } else {
     getCityData();
     getCityImage();
+    getForecastData();
     return (
       <Loader
         type="TailSpin"
