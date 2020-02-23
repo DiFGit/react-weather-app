@@ -20,6 +20,7 @@ export default function WeatherApp(props) {
   console.log(city);
   console.log(weatherData.ready);
   console.log(forecastData.ready);
+  console.log(forecastData.city);
 
   function displayCityImage(response) {
     setImageUrl(response.data.photos[3].src.portrait);
@@ -135,7 +136,7 @@ export default function WeatherApp(props) {
     setCelsius("active btn btn-lg units fahrenheit");
   }
 
-  if (weatherData.ready && forecastData.ready) {
+  if (weatherData.ready && forecastData.city === weatherData.city) {
     return (
       <div className="weatherData container">
         <div className="card bg-dark text-white">
@@ -194,7 +195,12 @@ export default function WeatherApp(props) {
             <br />
             <br />
             <div className="forecast">
-              <ForecastDays data={forecastData} units={units} loaded={true} />
+              <ForecastDays
+                weatherData={weatherData}
+                forecastData={forecastData}
+                units={units}
+                loaded={true}
+              />
             </div>
           </div>
         </div>

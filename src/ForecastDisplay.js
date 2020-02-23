@@ -3,6 +3,7 @@ import "./Forecast.css";
 
 export default function ForecastDisplay(props) {
   let forecastDays = props.fourDayForecast;
+  console.log(forecastDays);
 
   function formatForecastDay(timestamp) {
     let date = new Date(timestamp);
