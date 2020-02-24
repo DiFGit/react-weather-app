@@ -9,7 +9,7 @@ export default function ForecastDays(props) {
   console.log(weather);
 
   let date = new Date(
-    props.forecastData.date * 1000 - props.forecastData.timezone * 1000
+    props.forecastData.date * 1000 + props.forecastData.timezone * 1000
   );
   let hour = date.getHours();
   console.log(date);
