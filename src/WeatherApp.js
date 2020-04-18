@@ -16,36 +16,11 @@ export default function WeatherApp(props) {
   let [fahrenheit, setFahrenheit] = useState(
     "inactive btn btn-lg units fahrenheit"
   );
-  let [imageUrl, setImageUrl] = useState(null);
-  console.log(city);
-  console.log(weatherData.ready);
+  const [currentLocation, setCurrentLocation] = useState(false);
 
-  function displayCityImage(response) {
-    setImageUrl(response.data.photos[3].src.portrait);
-  }
-
-  function handleMainError() {
+  /*   function handleMainError() {
     alert("We are trying to find it...");
-  }
-
-  function handleErrors() {
-    setImageUrl(
-      "https://images.pexels.com/photos/1078850/pexels-photo-1078850.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-    );
-  }
-
-  function getCityImage() {
-    axios({
-      method: "get",
-      url: `https://api.pexels.com/v1/search?query=${city}+query&per_page=15&page=1`,
-      headers: {
-        Authorization:
-          "563492ad6f91700001000001ea246cab4f4645409f66c0be39fbe2b1",
-      },
-    })
-      .then(displayCityImage)
-      .catch(handleErrors);
-  }
+  } */
 
   function handleResponse(response) {
     setWeatherData({
@@ -68,7 +43,8 @@ export default function WeatherApp(props) {
       const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
       const apiUrl = `https://api.openweathermap.org/data/2.5/`;
       let weatherApiUrl = `${apiUrl}weather?q=${city}&appid=${apiKey}&units=metric`;
-      axios.get(weatherApiUrl).then(handleResponse).catch(handleMainError);
+      axios.get(weatherApiUrl).then(handleResponse);
+      setCurrentLocation(false);
     },
     [city]
   );
@@ -78,7 +54,9 @@ export default function WeatherApp(props) {
     const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
     const apiUrl = `https://api.openweathermap.org/data/2.5/`;
     let weatherApiUrl = `${apiUrl}weather?${currentPosition}&appid=${apiKey}&units=metric`;
-    axios.get(weatherApiUrl).then(handleResponse).catch(handleMainError);
+    axios.get(weatherApiUrl).then(handleResponse);
+    setCurrentLocation(true);
+    setCity(null);
   }
 
   function getCurrentLocation() {
@@ -93,7 +71,6 @@ export default function WeatherApp(props) {
   function handleSubmit(event) {
     event.preventDefault();
     setCity(input);
-    getCityImage();
   }
 
   function displayImperial(event) {
@@ -114,7 +91,7 @@ export default function WeatherApp(props) {
     return (
       <div className="weatherData container">
         <div className="card bg-dark text-white">
-          <CityImage image={imageUrl} />{" "}
+          <CityImage city={city} currentLocation={currentLocation} />{" "}
           <div className="card-img-overlay">
             <div className="row clearfix">
               <div className="form-group">
@@ -176,7 +153,6 @@ export default function WeatherApp(props) {
       </div>
     );
   } else {
-    getCityImage();
     return (
       <Loader
         type="TailSpin"
