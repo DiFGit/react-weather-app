@@ -1,37 +1,43 @@
-/* import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ForecastDays from "./ForecastDays";
-import CityImage from "./CityImage";
 import "./Forecast.css";
 
 export default function Forecast(props) {
-  let [loaded, setLoaded] = useState(false);
-  let [forecast, setForecast] = useState(null);
+  let [forecast, setForecast] = useState({ ready: false });
   let units = props.units;
-  console.log(props.city);
-  console.log(loaded);
+  console.log(props.weatherData.city);
 
-  function getForecastData(response) {
-    setForecast(response.data);
+  function handleForecastResponse(response) {
+    setForecast({
+      data: response.data,
+      city: response.data.city.name,
+      date: response.data.list[0].dt,
+      timezone: response.data.city.timezone,
+      ready: true,
+    });
+    console.log(response.data.city.name);
   }
 
-  if (props.ready && loaded && forecast.city.name === props.city) {
-    return <ForecastDays data={forecast} units={units} loaded={true} />;
+  useEffect(
+    function getForecastData() {
+      const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
+      const apiUrl = `https://api.openweathermap.org/data/2.5/`;
+      let apiForecastUrl = `${apiUrl}forecast?q=${props.weatherData.city}&appid=${apiKey}&units=metric`;
+      axios.get(apiForecastUrl).then(handleForecastResponse);
+    },
+    [props.weatherData.city]
+  );
+
+  if (forecast.city === props.weatherData.city) {
+    return (
+      <ForecastDays
+        weatherData={props.weatherData}
+        forecastData={forecast}
+        units={units}
+      />
+    );
   } else {
-    const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
-    const apiUrl = `https://api.openweathermap.org/data/2.5/`;
-    let apiForecastUrl = `${apiUrl}forecast?q=${props.city}&appid=${apiKey}&units=metric`;
-    axios
-      .get(apiForecastUrl)
-      .then(getForecastData)
-      .catch(
-        <CityImage
-          image={
-            "https://images.pexels.com/photos/1078850/pexels-photo-1078850.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-          }
-        />
-      );
     return <div>"Loading..."</div>;
   }
 }
- */

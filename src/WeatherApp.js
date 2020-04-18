@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import "./WeatherApp.css";
 import CityImage from "./CityImage";
 import MainData from "./MainData";
-import ForecastDays from "./ForecastDays";
+import Forecast from "./Forecast";
 import Loader from "react-loader-spinner";
 
 export default function WeatherApp(props) {
   let [city, setCity] = useState(props.defaultCity);
+  let [input, setInput] = useState("null");
   let [weatherData, setWeatherData] = useState({ ready: false });
   let [units, setUnits] = useState("metric");
   let [celsius, setCelsius] = useState("active btn btn - lg units celsius");
@@ -16,11 +17,8 @@ export default function WeatherApp(props) {
     "inactive btn btn-lg units fahrenheit"
   );
   let [imageUrl, setImageUrl] = useState(null);
-  let [forecastData, setForecastData] = useState({ ready: false });
   console.log(city);
   console.log(weatherData.ready);
-  console.log(forecastData.ready);
-  console.log(forecastData.city);
 
   function displayCityImage(response) {
     setImageUrl(response.data.photos[3].src.portrait);
@@ -42,22 +40,11 @@ export default function WeatherApp(props) {
       url: `https://api.pexels.com/v1/search?query=${city}+query&per_page=15&page=1`,
       headers: {
         Authorization:
-          "563492ad6f91700001000001ea246cab4f4645409f66c0be39fbe2b1"
-      }
+          "563492ad6f91700001000001ea246cab4f4645409f66c0be39fbe2b1",
+      },
     })
       .then(displayCityImage)
       .catch(handleErrors);
-  }
-
-  function handleForecastResponse(response) {
-    setForecastData({
-      data: response.data,
-      city: response.data.city.name,
-      date: response.data.list[0].dt,
-      timezone: response.data.city.timezone,
-      ready: true
-    });
-    console.log(response.data.city.name);
   }
 
   function handleResponse(response) {
@@ -72,40 +59,26 @@ export default function WeatherApp(props) {
       windSpeed: response.data.wind.speed,
       city: response.data.name,
       time: response.data.dt * 1000 + response.data.timezone * 1000,
-      ready: true
+      ready: true,
     });
-    setCity(response.data.name);
   }
 
-  function getForecastData() {
-    const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
-    const apiUrl = `https://api.openweathermap.org/data/2.5/`;
-    let apiForecastUrl = `${apiUrl}forecast?q=${city}&appid=${apiKey}&units=metric`;
-    axios
-      .get(apiForecastUrl)
-      .then(handleForecastResponse)
-      .catch(handleErrors);
-  }
-
-  function getCityData() {
-    const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
-    const apiUrl = `https://api.openweathermap.org/data/2.5/`;
-    let weatherApiUrl = `${apiUrl}weather?q=${city}&appid=${apiKey}&units=metric`;
-    axios
-      .get(weatherApiUrl)
-      .then(handleResponse)
-      .catch(handleMainError);
-  }
+  useEffect(
+    function getCityData() {
+      const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
+      const apiUrl = `https://api.openweathermap.org/data/2.5/`;
+      let weatherApiUrl = `${apiUrl}weather?q=${city}&appid=${apiKey}&units=metric`;
+      axios.get(weatherApiUrl).then(handleResponse).catch(handleMainError);
+    },
+    [city]
+  );
 
   function getLocalData(position) {
     let currentPosition = `lat=${position.coords.latitude}&lon=${position.coords.longitude}`;
     const apiKey = "1c79a9c19394dbdbf78cd6d4344cc928";
     const apiUrl = `https://api.openweathermap.org/data/2.5/`;
     let weatherApiUrl = `${apiUrl}weather?${currentPosition}&appid=${apiKey}&units=metric`;
-    axios
-      .get(weatherApiUrl)
-      .then(handleResponse)
-      .catch(handleMainError);
+    axios.get(weatherApiUrl).then(handleResponse).catch(handleMainError);
   }
 
   function getCurrentLocation() {
@@ -113,12 +86,13 @@ export default function WeatherApp(props) {
   }
 
   function updateInput(event) {
-    setCity(event.target.value);
+    event.preventDefault();
+    setInput(event.target.value);
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    getCityData();
+    setCity(input);
     getCityImage();
   }
 
@@ -136,7 +110,7 @@ export default function WeatherApp(props) {
     setCelsius("active btn btn-lg units fahrenheit");
   }
 
-  if (weatherData.ready && forecastData.city === weatherData.city) {
+  if (weatherData.ready) {
     return (
       <div className="weatherData container">
         <div className="card bg-dark text-white">
@@ -195,28 +169,21 @@ export default function WeatherApp(props) {
             <br />
             <br />
             <div className="forecast">
-              <ForecastDays
-                weatherData={weatherData}
-                forecastData={forecastData}
-                units={units}
-                loaded={true}
-              />
+              <Forecast weatherData={weatherData} units={units} />
             </div>
           </div>
         </div>
       </div>
     );
   } else {
-    getCityData();
     getCityImage();
-    getForecastData();
     return (
       <Loader
         type="TailSpin"
         color="#00BFFF"
         height={80}
         width={80}
-        timeout={3000} //3 secs
+        timeout={3000}
         className="loader"
       />
     );

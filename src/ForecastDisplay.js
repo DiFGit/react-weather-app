@@ -3,7 +3,6 @@ import "./Forecast.css";
 
 export default function ForecastDisplay(props) {
   let forecastDays = props.fourDayForecast;
-  console.log(forecastDays);
 
   function formatForecastDay(timestamp) {
     let date = new Date(timestamp);
@@ -17,7 +16,7 @@ export default function ForecastDisplay(props) {
     return (
       <footer className="forecastBox">
         <div className="row justify-content-center forecast">
-          {forecastDays.map(day => {
+          {forecastDays.map((day) => {
             return (
               <div className="col-auto">
                 <small>
@@ -32,12 +31,12 @@ export default function ForecastDisplay(props) {
                 />
                 <small>
                   {Math.round(
-                    (Math.max(...day.map(day => day.main.temp_max)) * 9) / 5 +
+                    (Math.max(...day.map((day) => day.main.temp_max)) * 9) / 5 +
                       32
                   )}
                   º /{" "}
                   {Math.round(
-                    (Math.min(...day.map(day => day.main.temp_min)) * 9) / 5 +
+                    (Math.min(...day.map((day) => day.main.temp_min)) * 9) / 5 +
                       32
                   )}
                   º
@@ -52,7 +51,7 @@ export default function ForecastDisplay(props) {
     return (
       <footer className="forecastBox">
         <div className="row justify-content-center forecast">
-          {forecastDays.map(day => {
+          {forecastDays.map((day) => {
             return (
               <div className="col-auto">
                 <small>
@@ -66,8 +65,9 @@ export default function ForecastDisplay(props) {
                   alt=""
                 />
                 <small>
-                  {Math.round(Math.max(...day.map(day => day.main.temp_max)))}º
-                  / {Math.round(Math.min(...day.map(day => day.main.temp_min)))}
+                  {Math.round(Math.max(...day.map((day) => day.main.temp_max)))}
+                  º /{" "}
+                  {Math.round(Math.min(...day.map((day) => day.main.temp_min)))}
                   º
                 </small>
               </div>
