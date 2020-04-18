@@ -18,10 +18,6 @@ export default function WeatherApp(props) {
   );
   const [currentLocation, setCurrentLocation] = useState(false);
 
-  /*   function handleMainError() {
-    alert("We are trying to find it...");
-  } */
-
   function handleResponse(response) {
     setWeatherData({
       iconUrl: `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
